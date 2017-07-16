@@ -149,10 +149,9 @@
 
 10.  列表渲染
 
-
 	10.1 **v-for**
 
-	1.基本用法。	
+	 1.基本用法。	
 
 			<ul id="example-2">
 			  <li v-for="(item, index) in items">
@@ -178,12 +177,12 @@
 	　　v-for 还支持一个可选的第二个参数为当前项的索引。还可以用 of 替代 in 作为分隔符。如：`<div v-for="item of items"></div>`
 	 
 
-	2.用带有 v-for 的 <template> 标签来渲染多个元素块
+	 2.用带有 v-for 的 <template> 标签来渲染多个元素块
 
-	3.v-for 通过一个对象的属性来迭代。
+	 3.v-for 通过一个对象的属性来迭代。
 			
 			<div v-for="(value, key, index) in object">
 			  {{ index }}. {{ key }} : {{ value }}
 			</div>
 
-　　 此处，在遍历对象时，是按 Object.keys() 的结果遍历，无法保证顺序一致。
+　　  此处，在遍历对象时，是按 Object.keys() 的结果遍历，无法保证顺序一致。
