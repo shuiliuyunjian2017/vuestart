@@ -119,9 +119,9 @@
 			</div>
 
 		
-	  1. v-if可以单独使用，也可以配合v-else使用，或配合v-else-if&&v-else使用。
+	  1.v-if可以单独使用，也可以配合v-else使用，或配合v-else-if&&v-else使用。
 
-	  2. 还可以用于template中，如：
+	  2.还可以用于template中，如：
 
 			<template v-if="ok">
 			  <h1>Title</h1>
@@ -131,7 +131,7 @@
 
 	    最终的渲染结果不会包含 `<template>` 元素。
 
-	  3. 用Key值管理复用的元素。
+	  3.用Key值管理复用的元素。
 
 			<template v-if="loginType === 'username'">
 			  <label>Username</label>
