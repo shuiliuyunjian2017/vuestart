@@ -53,7 +53,7 @@
 
 7. **class绑定** v-bind**:class **
 
-	7.1 对象语法、
+	7.1 对象语法
         
         1. <div v-bind:class="{ active: isActive }"></div>
 		如果isActive为true，则渲染为<div class="active"></div>
@@ -145,13 +145,14 @@
 		若不添加key属性，则每次渲染都会复用相同的元素。添加了key，每次切换输入框都将被重新渲染。如上图。
 
 	
-	9.2 **v-show** 与v-if大致相同，只是带有 v-show 的元素始终会被渲染并保留在 DOM 中，且v-show 不支持 <template> 语法。v-show 是简单地切换元素的 CSS 属性 display 。
+	9.2 **v-show** 与v-if大致相同，只是带有 v-show 的元素始终会被渲染并保留在 DOM 中，且v-show 不支持 `<template>` 语法。v-show 是简单地切换元素的 CSS 属性 display 。
 
-10.  列表渲染
+
+10. 列表渲染
 
 	10.1 **v-for**
 
-	 1.基本用法。	
+	1.基本用法。	
 
 			<ul id="example-2">
 			  <li v-for="(item, index) in items">
@@ -172,17 +173,68 @@
 			Parent - 0 - Foo
 			Parent - 1 - Bar
 
-	　　在 v-for 块中，我们拥有对父作用域属性的完全访问权限。 
+	在 v-for 块中，我们拥有对父作用域属性的完全访问权限。 
 		
-	　　v-for 还支持一个可选的第二个参数为当前项的索引。还可以用 of 替代 in 作为分隔符。如：`<div v-for="item of items"></div>`
+	v-for 还支持一个可选的第二个参数为当前项的索引。还可以用 of 替代 in 作为分隔符。如：`<div v-for="item of items"></div>`
 	 
 
-	 2.用带有 v-for 的 <template> 标签来渲染多个元素块
+	2.用带有 v-for 的 `<template>` 标签来渲染多个元素块
 
-	 3.v-for 通过一个对象的属性来迭代。
+	3.v-for 通过一个对象的属性来迭代。
 			
 			<div v-for="(value, key, index) in object">
 			  {{ index }}. {{ key }} : {{ value }}
 			</div>
 
 　　  此处，在遍历对象时，是按 Object.keys() 的结果遍历，无法保证顺序一致。
+
+　　4.v-for 也可以取整数，如：`<span v-for="n in 10">{{ n }} </span>`。
+
+　　5.组件里的v-for　**2.2.0+的版本里，当在组件中使用 v-for 时，key 现在是必须的。**为了传递迭代数据到组件里，我们要用 props。如：
+
+		<div id="todo-list-example">
+		  <input
+		    v-model="newTodoText"
+		    v-on:keyup.enter="addNewTodo"
+		    placeholder="Add a todo"
+		  >
+		  <ul>
+		    <li
+		      is="todo-item"
+		      v-for="(todo, index) in todos"
+		      v-bind:key="index"
+		      v-bind:title="todo"
+		      v-on:remove="todos.splice(index, 1)"
+		    ></li>
+		  </ul>
+		</div>
+
+		Vue.component('todo-item', {
+		  template: '\
+		    <li>\
+		      {{ title }}\
+		      <button v-on:click="$emit(\'remove\')">X</button>\
+		    </li>\
+		  ',
+		  props: ['title']
+		})
+		new Vue({
+		  el: '#todo-list-example',
+		  data: {
+		    newTodoText: '',
+		    todos: [
+		      'Do the dishes',
+		      'Take out the trash',
+		      'Mow the lawn'
+		    ]
+		  },
+		  methods: {
+		    addNewTodo: function () {
+		      this.todos.push(this.newTodoText)
+		      this.newTodoText = ''
+		    }
+		  }
+		})
+	
+
+　　　6.v-for with v-if 当它们处于同一节点， v-for 的优先级比 v-if 更高，这意味着 v-if 将分别重复运行于每个 v-for 循环中。
